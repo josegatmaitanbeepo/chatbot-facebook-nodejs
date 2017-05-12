@@ -184,6 +184,12 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "user-describe":
+			if (isDefined(contexts[0]) && contexts[0].name === "req3" && contexts[0].parameters) {
+				console.log(contexts[0]);
+			}
+			sendTextMessage(sender, responseText);
+		break;
 		case "surprise-me":
 
 			let replies = [{
