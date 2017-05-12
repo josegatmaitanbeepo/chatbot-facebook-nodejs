@@ -188,20 +188,16 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 			let replies = [{
 				"content_type":"text",
-				"title":"Motorboat My Goat",
-				"payload":"Motorboat My Goat"
+				"title":"Choice 1",
+				"payload":"Choice 1"
 			}, {
 				"content_type":"text",
-				"title":"AlQaholic",
-				"payload":"AlQaholic"
+				"title":"Choice 2",
+				"payload":"Choice 2"
 			}, {
 				"content_type":"text",
-				"title":"Julius Siezure",
-				"payload":"Julius Siezure"
-			}, {
-				"content_type":"text",
-				"title":"Nah",
-				"payload":"nah"
+				"title":"Choice 3",
+				"payload":"Choice 3"
 			}];
 
 			sendTextMessage(sender, responseText, replies);
