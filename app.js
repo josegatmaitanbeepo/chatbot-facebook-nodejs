@@ -466,8 +466,6 @@ function sendFileMessage(recipientId, fileName) {
 	callSendAPI(messageData);
 }
 
-
-
 /*
  * Send a button message using the Send API.
  *
