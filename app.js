@@ -209,7 +209,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
-		break;
 	}
 }
 
@@ -367,13 +366,15 @@ function sendToApiAi(sender, text) {
 
 
 
-function sendTextMessage(recipientId, text) {
+function sendTextMessage(recipientId, text, replies, metadata) {
 	var messageData = {
 		recipient: {
 			id: recipientId
 		},
 		message: {
-			text: text
+			text: text,
+			metadata: (isDefined(metadata) ? metadata : ""),
+			quick_replies: replies
 		}
 	}
 	callSendAPI(messageData);
