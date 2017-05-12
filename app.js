@@ -184,9 +184,32 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "surprise-me":
+
+			let replies = [{
+				"content_type":"text",
+				"title":"Motorboat My Goat",
+				"payload":"Motorboat My Goat"
+			}, {
+				"content_type":"text",
+				"title":"AlQaholic",
+				"payload":"AlQaholic"
+			}, {
+				"content_type":"text",
+				"title":"Julius Siezure",
+				"payload":"Julius Siezure"
+			}, {
+				"content_type":"text",
+				"title":"Nah",
+				"payload":"nah"
+			}];
+
+			sendTextMessage(sender, responseText, replies);
+		break;
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
+		break;
 	}
 }
 
@@ -292,9 +315,9 @@ function handleApiAiResponse(sender, response) {
 				setTimeout(handleMessage.bind(null, messages[i], sender), timeout);
 			} else if ( messages[i].type == 1 && i == messages.length - 1) {
 				cardTypes.push(messages[i]);
-                		timeout = (i - 1) * timeoutInterval;
-                		setTimeout(handleCardMessages.bind(null, cardTypes, sender), timeout);
-                		cardTypes = [];
+						timeout = (i - 1) * timeoutInterval;
+						setTimeout(handleCardMessages.bind(null, cardTypes, sender), timeout);
+						cardTypes = [];
 			} else if ( messages[i].type == 1 ) {
 				cardTypes.push(messages[i]);
 			} else {
@@ -511,8 +534,7 @@ function sendGenericMessage(recipientId, elements) {
 }
 
 
-function sendReceiptMessage(recipientId, recipient_name, currency, payment_method,
-							timestamp, elements, address, summary, adjustments) {
+function sendReceiptMessage(recipientId, recipient_name, currency, payment_method, timestamp, elements, address, summary, adjustments) {
 	// Generate a random receipt ID as the API requires a unique ID
 	var receiptId = "order" + Math.floor(Math.random() * 1000);
 
@@ -629,7 +651,7 @@ function sendAccountLinking(recipientId) {
 					buttons: [{
 						type: "account_link",
 						url: config.SERVER_URL + "/authorize"
-          }]
+		  }]
 				}
 			}
 		}
