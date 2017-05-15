@@ -14,8 +14,11 @@
   "license": "ISC",
   "dependencies": {
     "apiai": "^2.0.5",
+    "bluebird": "^3.5.0",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "mongodb": "^2.2.26",
+    "mongoose": "^4.9.9",
     "request": "^2.72.0",
     "uuid": "^2.0.3"
   }

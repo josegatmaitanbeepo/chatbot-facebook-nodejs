@@ -47,8 +47,10 @@ app.use(bodyParser.urlencoded({
 // Process application/json
 app.use(bodyParser.json())
 
-
-
+var mongoose = require("mongoose");
+var url = process.env.DATABASEURL || "mongodb://agentaiapp:agentaiapp123@ds035270.mlab.com:35270/agentai";
+mongoose.connect(url);
+mongoose.Promise = require('bluebird');
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	language: "en",
@@ -192,14 +194,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				}
 
 				if (obj.option !== "" && obj.choice_description !== "" && obj.choice_reason !== "") {
-
+					sendTextMessage(sender, obj.option+" "+obj.choice_description+" "+obj.choice_reason);
 				}
-
-				sendTextMessage(sender, obj.option+" "+obj.choice_description+" "+obj.choice_reason);
 			}
-			else {
-				sendTextMessage(sender, responseText);
-			}
+			sendTextMessage(sender, responseText);
 			
 		break;
 		case "surprise-me":
