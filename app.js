@@ -52,6 +52,8 @@ var url = process.env.DATABASEURL || "mongodb://agentaiapp:agentaiapp123@ds03527
 mongoose.connect(url);
 mongoose.Promise = require('bluebird');
 
+var Property = require("./models/property");
+
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	language: "en",
 	requestSource: "fb"
@@ -182,45 +184,37 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
-		case "user-describe":
+		case "property-action-search":
 			if (isDefined(contexts[0]) && contexts[0].name === "req3" && contexts[0].parameters) {
 				
 				let prm = contexts[0].parameters
 
 				var obj = {
-					option: (isDefined(prm.option) && prm.option !== "" ? prm.option : ""),
-					choice_description: (isDefined(prm.choice_description) && prm.choice_description !== "" ? prm.choice_description : ""),
-					choice_reason: (isDefined(prm.choice_reason) && prm.choice_reason !== "" ? prm.choice_reason : "")
+					"property_subNumber": prm["property-subNumber"],
+					"property_streetNumber": prm["property-streetNumber"],
+					"property_streetName": prm["property-streetName"],
+					"property_suburb": prm["property-suburb"]
 				}
 
-				if (obj.option !== "" && obj.choice_description !== "" && obj.choice_reason !== "") {
-					sendTextMessage(sender, obj.option+" "+obj.choice_description+" "+obj.choice_reason);
+				if (obj.property_subNumber !== "" && obj.property_streetNumber !== "" && obj.property_streetName !== "" && obj.property_suburb !== "") {
+					sendTextMessage(sender, "Please wait while I search for some infos");
+
+					Property.findOne({
+						"subNumber": obj.property_subNumber,
+						"streetNumber": obj.property_streetNumber,
+						"streetName": obj.property_streetName,
+						"suburb": obj.property_suburb
+					}).populate("user").exec(function(err, res) {
+						sendTextMessage(sender, res.user._email);
+					});
 				}
 			}
 			sendTextMessage(sender, responseText);
-			
-		break;
-		case "surprise-me":
-
-			let replies = [{
-				"content_type":"text",
-				"title":"Choice 1",
-				"payload":"Choice 1"
-			}, {
-				"content_type":"text",
-				"title":"Choice 2",
-				"payload":"Choice 2"
-			}, {
-				"content_type":"text",
-				"title":"Choice 3",
-				"payload":"Choice 3"
-			}];
-
-			sendTextMessage(sender, responseText, replies);
 		break;
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
+		break;
 	}
 }
 
