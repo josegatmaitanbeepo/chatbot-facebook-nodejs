@@ -119,10 +119,6 @@ app.post('/webhook/', function (req, res) {
 	}
 });
 
-
-
-
-
 function receivedMessage(event) {
 
 	var senderID = event.sender.id;
@@ -186,9 +182,25 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "user-describe":
 			if (isDefined(contexts[0]) && contexts[0].name === "req3" && contexts[0].parameters) {
-				console.log(contexts[0]);
+				
+				let prm = contexts[0].parameters
+
+				var obj = {
+					option: (isDefined(prm.option) && prm.option !== "" ? prm.option : ""),
+					choice_description: (isDefined(prm.choice_description) && prm.choice_description !== "" ? prm.choice_description : ""),
+					choice_reason: (isDefined(prm.choice_reason) && prm.choice_reason !== "" ? prm.choice_reason : "")
+				}
+
+				if (obj.option !== "" && obj.choice_description !== "" && obj.choice_reason !== "") {
+
+				}
+
+				sendTextMessage(sender, obj.option+" "+obj.choice_description+" "+obj.choice_reason);
 			}
-			sendTextMessage(sender, responseText);
+			else {
+				sendTextMessage(sender, responseText);
+			}
+			
 		break;
 		case "surprise-me":
 
