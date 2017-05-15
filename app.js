@@ -205,7 +205,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						"streetName": obj.property_streetName,
 						"suburb": obj.property_suburb
 					}).populate("user").exec(function(err, res) {
-						sendTextMessage(sender, res.user._email);
+						if (err) {
+							console.log(err);
+						}
+						else {
+							sendTextMessage(sender, res.user._email);
+						}
+						console.log(res);
 					});
 				}
 			}
