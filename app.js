@@ -197,6 +197,27 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					"property_suburb": prm["property-suburb"]
 				}
 
+				let replies = [{
+					"content_type":"text",
+					"title":"9am",
+					"payload":"9am"
+				}, {
+					"content_type":"text",
+					"title":"10am",
+					"payload":"10am"
+				}, {
+					"content_type":"text",
+					"title":"11am",
+					"payload":"11am"
+				}, {
+					"content_type":"text",
+					"title":"12pm",
+					"payload":"12pm"
+				}];
+
+
+				"49/ 21 Love Street BULIMBA"
+
 				if (obj.property_subNumber !== "" && obj.property_streetNumber !== "" && obj.property_streetName !== "" && obj.property_suburb !== "") {
 					Property.findOne({
 						"subNumber": obj.property_subNumber,
@@ -210,7 +231,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						}
 						else {
 							if (res) {
-								sendTextMessage(sender, "Oi mate! Good news, that property is available, send an email to "+res.account._id+"@parse.candotech.com.au regarding your enquiry. :D");
+								sendTextMessage(sender, "Please select what time do you want to book: ", replies);
 							}
 							else {
 								sendTextMessage(sender, "Mate, sorry to tell you that the property you wanted is not available. :(");
