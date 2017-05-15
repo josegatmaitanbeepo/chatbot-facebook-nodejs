@@ -203,15 +203,20 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 						"subNumber": obj.property_subNumber,
 						"streetNumber": obj.property_streetNumber,
 						"streetName": obj.property_streetName,
-						"suburb": obj.property_suburb
-					}).populate("user").exec(function(err, res) {
+						"suburb": obj.property_suburb,
+						"archive": false
+					}).populate("account").exec(function(err, res) {
 						if (err) {
 							console.log(err);
 						}
 						else {
-							sendTextMessage(sender, res.user._email);
+							if (res) {
+								sendTextMessage(sender, "Oi mate! Good news, that property is available, send an email to "+res.account._id+"@parse.candotech.com.au regarding your enquiry. :D");
+							}
+							else {
+								sendTextMessage(sender, "Mate, sorry to tell you that the property you wanted is not available. :(");
+							}
 						}
-						console.log(res);
 					});
 				}
 			}
