@@ -53,6 +53,7 @@ mongoose.connect(url);
 mongoose.Promise = require('bluebird');
 
 var Property = require("./models/property");
+var Account = require("./models/account");
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	language: "en",
@@ -197,8 +198,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				}
 
 				if (obj.property_subNumber !== "" && obj.property_streetNumber !== "" && obj.property_streetName !== "" && obj.property_suburb !== "") {
-					sendTextMessage(sender, "Please wait while I search for some infos");
-
 					Property.findOne({
 						"subNumber": obj.property_subNumber,
 						"streetNumber": obj.property_streetNumber,
