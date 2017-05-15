@@ -185,7 +185,7 @@ function handleEcho(messageId, appId, metadata) {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "property-action-search":
-			if (isDefined(contexts[0]) && contexts[0].name === "req3" && contexts[0].parameters) {
+			if (isDefined(contexts[0]) && contexts[0].name === "property-enquiry" && contexts[0].parameters) {
 				
 				let prm = contexts[0].parameters
 
