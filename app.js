@@ -703,10 +703,10 @@
 				var user = JSON.parse(body);
 
 				if (user.first_name) {
-					console.log("FB user: %s %s, %s",
-						user.first_name, user.last_name, user.gender);
+					console.log("FB user: %s %s, %s", user.first_name, user.last_name, user.gender);
 
-					sendTextMessage(userId, "Welcome "+user.first_name+'!');
+					sendTextMessage(userId, "Welcome to Aire, "+user.first_name+"!");
+					sendTextMessage(userId, "I can search properties, book property inspections, property appraisals and almost anything related to empty lawn haha, just kidding.");
 				}
 				else {
 					console.log("Cannot get data for fb user with id", userId);
@@ -763,6 +763,9 @@
 		var payload = event.postback.payload;
 
 		switch (payload) {
+			case "pb_aire_get_started":
+				greetUserText(senderID); 
+			break;
 			case "pb_aire_property_discover":
 
 			break;
