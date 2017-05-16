@@ -763,6 +763,14 @@
 		var payload = event.postback.payload;
 
 		switch (payload) {
+			case "pb_aire_property_discover":
+
+			break;
+			case "pb_aire_property_inspections":
+				sendToApiAi(senderID, "property enquiry");
+			break;
+			case "pb_aire_property_appraisal":
+			break;
 			default:
 				// Unindentified payload
 
