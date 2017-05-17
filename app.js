@@ -705,9 +705,7 @@
 				if (user.first_name) {
 					console.log("FB user: %s %s, %s", user.first_name, user.last_name, user.gender);
 
-					sendTextMessage(userId, "Welcome to Aire, "+user.first_name+"!", undefined, function() {
-						sendTextMessage(userId, "I can search properties, book property inspections, property appraisals and almost anything related to empty lawn haha, just kidding.");
-					});
+					sendTextMessage(userId, "Welcome to Aire I'll be your assistant here. I can search properties, book property inspections, property appraisals and almost anything related to empty lawn haha, just kidding. So, what can I do for you "+user.first_name.split(" ")[0]+"?");
 				}
 				else {
 					console.log("Cannot get data for fb user with id", userId);
@@ -736,12 +734,10 @@
 				var messageId = body.message_id;
 
 				if (messageId) {
-					console.log("Successfully sent message with id %s to recipient %s",
-						messageId, recipientId);
+					console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
 				}
 				else {
-					console.log("Successfully called Send API for recipient %s",
-						recipientId);
+					console.log("Successfully called Send API for recipient %s", recipientId);
 				}
 				if (callback) {
 					callback(data);
@@ -777,6 +773,7 @@
 				sendToApiAi(senderID, "property enquiry");
 			break;
 			case "pb_aire_property_appraisal":
+				
 			break;
 			default:
 				// Unindentified payload
