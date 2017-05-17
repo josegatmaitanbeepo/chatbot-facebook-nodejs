@@ -250,9 +250,9 @@
 						Property.findOne({$and: [{
 							"subNumber": {$in: tmp_address}}, {
 							"streetNumber": {$in: tmp_address}}], $or: [{
-							"streetName": {$in: tmp_address}, {
+							"streetName": {$in: tmp_address}}, {
 							"suburb": {$in: tmp_address}},
-						], "archive": false}.populate("account").exec(function(err, res) {
+						], "archive": false}).populate("account").exec(function(err, res) {
 							if (err) {
 								console.log(err);
 							}
