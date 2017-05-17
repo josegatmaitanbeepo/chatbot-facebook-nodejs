@@ -238,7 +238,7 @@
 							var a = str.replace(/\W+/g, " ");
 							var b = a.split(" ");
     						var c = [];
-							for(var i=0; i<b.length; i++) {
+							for(var i=2; i<b.length; i++) {
 								c.push(new RegExp(b[i], "i"));
 							}
 							return c;
