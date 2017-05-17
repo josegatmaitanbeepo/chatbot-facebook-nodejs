@@ -208,15 +208,7 @@
 			case "property-action-search":
 				if (isDefined(contexts[0]) && contexts[0].name === "property-enquiry" && contexts[0].parameters) {
 					
-					let prm = contexts[0].parameters
-
-					var obj = {
-						"property_subNumber": prm["property-subNumber"],
-						"property_streetNumber": prm["property-streetNumber"],
-						"property_streetName": prm["property-streetName"],
-						"property_suburb": prm["property-suburb"]
-					}
-
+					let prm = contexts[0].parameters;
 					let replies = [{
 						"content_type":"text",
 						"title":"9am",
@@ -235,24 +227,41 @@
 						"payload":"12pm"
 					}];
 
+					var obj = {
+						"property_subNumber": prm["property-subNumber"],
+						"property_streetNumber": prm["property-streetNumber"],
+						"property_streetName": prm["property-streetName"],
+						"property_suburb": prm["property-suburb"]
+					}
 
-					if (obj.property_subNumber !== "" && obj.property_streetNumber !== "" && obj.property_streetName !== "" && obj.property_suburb !== "") {
-						Property.findOne({
-							"subNumber": obj.property_subNumber,
-							"streetNumber": obj.property_streetNumber,
-							"streetName": obj.property_streetName,
-							"suburb": obj.property_suburb,
-							"archive": false
-						}).populate("account").exec(function(err, res) {
+					if (obj.property_param_address !== "" && obj.property_param_action_type !== "") {
+
+						var tmp_address_array = function(str) {
+							var a = str.replace(/\W+/g, " ");
+							var b = a.split(" ");
+    						var c = [];
+							for(var i=0; i<b.length; i++) {
+								c.push(new RegExp(b[i], "i"));
+							}
+							return c;
+						};
+						var tmp_address = tmp_address_array(obj.property_param_address);
+
+						Property.findOne({$and: [{
+							"subNumber": {$in: tmp_address}}, {
+							"streetNumber": {$in: tmp_address}}], $or: [{
+							"streetName": {$in: tmp_address}, {
+							"suburb": {$in: tmp_address}},
+						], "archive": false}.populate("account").exec(function(err, res) {
 							if (err) {
 								console.log(err);
 							}
 							else {
 								if (res) {
-									sendTextMessage(sender, "Please select what time do you want to book: ", replies);
+									sendTextMessage(sender, "Lucky! That property is available for "+property_param_action_type+"!", replies);
 								}
 								else {
-									sendTextMessage(sender, "Mate, sorry to tell you that the property you wanted is not available. :(");
+									sendTextMessage(sender, "Sorry, but "+property_param_address+" isn't available");
 								}
 							}
 						});
