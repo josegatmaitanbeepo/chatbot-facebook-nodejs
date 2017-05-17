@@ -264,7 +264,7 @@
 							}
 							else {
 								if (res) {
-									
+
 									sendGenericMessage(sender, [{
 										"title": "Propety for "+res.listingType,
 										"image_url": "http://cdn1-www.cattime.com/assets/uploads/gallery/persian-cats-and-kittens/persian-cats-and-kittens-8.jpg",
@@ -282,8 +282,8 @@
 											"title":"View Time Slots"
 										}, {
 											"type":"web_url",
-											"title":"Checkout Aire",
-											"payload":"https://getaire.com.au/"
+											"url": "https://getaire.com.au/",
+											"title":"Checkout Aire"
 										}]
 									}]);
 
