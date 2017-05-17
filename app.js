@@ -228,10 +228,8 @@
 					}];
 
 					var obj = {
-						"property_subNumber": prm["property-subNumber"],
-						"property_streetNumber": prm["property-streetNumber"],
-						"property_streetName": prm["property-streetName"],
-						"property_suburb": prm["property-suburb"]
+						"property_param_address": prm["property_param_address"],
+						"property_param_action_type": prm["property_param_action_type"]
 					}
 
 					if (obj.property_param_address !== "" && obj.property_param_action_type !== "") {
