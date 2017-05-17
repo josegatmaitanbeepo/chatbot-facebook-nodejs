@@ -421,7 +421,7 @@
 		apiaiRequest.end();
 	}
 
-	function sendTextMessage(recipientId, text, replies, metadata) {
+	function sendTextMessage(recipientId, text, replies, metadata, callback) {
 		var messageData = {
 			recipient: {
 				id: recipientId
@@ -432,7 +432,7 @@
 				quick_replies: replies
 			}
 		}
-		callSendAPI(messageData);
+		callSendAPI(messageData, callback);
 	}
 
 	function sendImageMessage(recipientId, imageUrl) {
@@ -705,8 +705,9 @@
 				if (user.first_name) {
 					console.log("FB user: %s %s, %s", user.first_name, user.last_name, user.gender);
 
-					sendTextMessage(userId, "Welcome to Aire, "+user.first_name+"!");
-					sendTextMessage(userId, "I can search properties, book property inspections, property appraisals and almost anything related to empty lawn haha, just kidding.");
+					sendTextMessage(userId, "Welcome to Aire, "+user.first_name+"!", undefined, function() {
+						sendTextMessage(userId, "I can search properties, book property inspections, property appraisals and almost anything related to empty lawn haha, just kidding.");
+					});
 				}
 				else {
 					console.log("Cannot get data for fb user with id", userId);
@@ -718,7 +719,7 @@
 		});
 	}
 
-	function callSendAPI(messageData) {
+	function callSendAPI(messageData, callback) {
 		// Call the Send API. The message data goes in the body. If successful, we'll get the message id in a response
 
 		request({
@@ -741,6 +742,9 @@
 				else {
 					console.log("Successfully called Send API for recipient %s",
 						recipientId);
+				}
+				if (callback) {
+					callback(data);
 				}
 			}
 			else {
