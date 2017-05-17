@@ -705,7 +705,7 @@
 				if (user.first_name) {
 					console.log("FB user: %s %s, %s", user.first_name, user.last_name, user.gender);
 
-					sendTextMessage(userId, "Welcome to Aire I'll be your assistant here. I can search properties, book property inspections, property appraisals and almost anything related to empty lawn haha, just kidding. So +"user.first_name.split(" ")[0]+", what can I do for you today?");
+					sendTextMessage(userId, "Welcome to Aire I'll be your assistant here. I can search properties, book property inspections, property appraisals and almost anything related to empty lawn haha, just kidding. So "+user.first_name.split(" ")[0]+", what can I do for you today?");
 				}
 				else {
 					console.log("Cannot get data for fb user with id", userId);
