@@ -238,8 +238,13 @@
 							var a = str.replace(/\W+/g, " ");
 							var b = a.split(" ");
     						var c = [];
-							for(var i=2; i<b.length; i++) {
-								c.push(new RegExp(b[i], "i"));
+							for(var i=0; i<b.length; i++) {
+								if (i > 1) {
+									c.push(b[i]);
+								}
+								else {
+									c.push(new RegExp(b[i], "i"));
+								}
 							}
 							console.log("");console.log("");
 							console.log(c);
