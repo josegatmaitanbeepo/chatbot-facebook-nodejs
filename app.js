@@ -240,10 +240,10 @@
     						var c = [];
 							for(var i=0; i<b.length; i++) {
 								if (i > 1) {
-									c.push(b[i]);
+									c.push(new RegExp(b[i], "i"));
 								}
 								else {
-									c.push(new RegExp(b[i], "i"));
+									c.push(b[i]);
 								}
 							}
 							console.log("");console.log("");
