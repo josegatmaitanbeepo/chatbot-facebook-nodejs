@@ -407,6 +407,10 @@
 
 		sendTypingOn(sender);
 
+		if (!sessionIds.has(senderID)) {
+			sessionIds.set(senderID, uuid.v1());
+		}
+
 		let apiaiRequest = apiAiService.textRequest(text, {
 			sessionId: sessionIds.get(sender)
 		});
