@@ -411,6 +411,8 @@
 			sessionId: sessionIds.get(sender)
 		});
 
+		console.log(apiaiRequest, sessionIds.get(sender));
+
 		apiaiRequest.on('response', (response) => {
 			if (isDefined(response.result)) {
 				handleApiAiResponse(sender, response);
@@ -895,5 +897,7 @@
 // Server
 
 	app.listen(app.get('port'), function () {
-		console.log('running on port', app.get('port'))
+		process.stdout.write('\x1Bc'); 
+		console.log("");
+		console.log("Chatbot is Alive!");
 	});
