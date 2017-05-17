@@ -411,7 +411,7 @@
 			sessionId: sessionIds.get(sender)
 		});
 
-		console.log(apiaiRequest, sessionIds.get(sender));
+		console.log(sender, sessionIds.get(sender));
 
 		apiaiRequest.on('response', (response) => {
 			if (isDefined(response.result)) {
