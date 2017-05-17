@@ -256,10 +256,10 @@
 							}
 							else {
 								if (res) {
-									sendTextMessage(sender, "Lucky! That property is available for "+property_param_action_type+"!", replies);
+									sendTextMessage(sender, "Lucky! "+obj.property_param_address+" is available for "+obj.property_param_action_type+"!", replies);
 								}
 								else {
-									sendTextMessage(sender, "Sorry, but "+property_param_address+" isn't available");
+									sendTextMessage(sender, "Sorry, but "+obj.property_param_address+" isn't available");
 								}
 							}
 						});
