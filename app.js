@@ -264,10 +264,30 @@
 							}
 							else {
 								if (res) {
-									console.log("");console.log("");
-									console.log(res._id);
-									console.log("");console.log("");
-									sendTextMessage(sender, "Lucky! "+obj.property_param_address+" is available for "+obj.property_param_action_type+"!", replies);
+									
+									sendGenericMessage(sender, [{
+										"title": "Propety for "+res.listingType,
+										"image_url": "http://cdn1-www.cattime.com/assets/uploads/gallery/persian-cats-and-kittens/persian-cats-and-kittens-8.jpg",
+										"subtitle": (res.subNumber !== "" ? res.subNumber+"/ " : "")+res.streetNumber+" "+res.streetName+" "+res.suburb+", "+res.state+" "+res.postcode,
+										"default_action": {
+											"type": "web_url",
+											"url": "https://morning-retreat-82821.herokuapp.com/booking?user="+res.account.user[0]+"&property="+res._id,
+											"messenger_extensions": true,
+											"webview_height_ratio": "tall",
+											"fallback_url": "https://getaire.com.au/"
+										},
+										"buttons":[{
+											"type":"web_url",
+											"url": "https://morning-retreat-82821.herokuapp.com/booking?user="+res.account.user[0]+"&property="+res._id,
+											"title":"View Time Slots"
+										}, {
+											"type":"web_url",
+											"title":"Checkout Aire",
+											"payload":"https://getaire.com.au/"
+										}]
+									}]);
+
+									// sendTextMessage(sender, "Lucky! "+obj.property_param_address+" is currently for "+res.listingType+" and is available for "+obj.property_param_action_type+"!");
 								}
 								else {
 									sendTextMessage(sender, "Sorry, but "+obj.property_param_address+" isn't available");
