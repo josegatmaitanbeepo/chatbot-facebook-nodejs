@@ -256,6 +256,7 @@
 							}
 							else {
 								if (res) {
+									console.log(res._id);
 									sendTextMessage(sender, "Lucky! "+obj.property_param_address+" is available for "+obj.property_param_action_type+"!", replies);
 								}
 								else {
