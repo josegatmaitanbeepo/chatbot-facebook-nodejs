@@ -241,6 +241,9 @@
 							for(var i=2; i<b.length; i++) {
 								c.push(new RegExp(b[i], "i"));
 							}
+							console.log("");console.log("");
+							console.log(c);
+							console.log("");console.log("");
 							return c;
 						};
 						var tmp_address = tmp_address_array(obj.property_param_address);
@@ -256,7 +259,9 @@
 							}
 							else {
 								if (res) {
+									console.log("");console.log("");
 									console.log(res._id);
+									console.log("");console.log("");
 									sendTextMessage(sender, "Lucky! "+obj.property_param_address+" is available for "+obj.property_param_action_type+"!", replies);
 								}
 								else {
