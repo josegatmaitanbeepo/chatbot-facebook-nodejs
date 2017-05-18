@@ -10,6 +10,7 @@
 	const request = require('request');
 	const app = express();
 	const uuid = require('uuid');
+	const request = require("request");
 
 // Messenger API parameters
 
@@ -25,8 +26,11 @@
 	if (!config.FB_APP_SECRET) {
 		throw new Error('missing FB_APP_SECRET');
 	}
-	if (!config.SERVER_URL) { //used for ink to static files
+	if (!config.SERVER_URL) { // used for ink to static files
 		throw new Error('missing SERVER_URL');
+	}
+	if (!config.OPEN_WEATHER_API_KEY) { // weather api key
+		throw new Error('missing OPEN_WEATHER_API_KEY');
 	}
 
 // Express Setup
@@ -207,7 +211,7 @@
 		switch (action) {
 			case "property-action-search":
 				if (isDefined(contexts[0]) && contexts[0].parameters) {
-					
+
 					let prm = contexts[0].parameters;
 					let replies = [{
 						"content_type":"text",
@@ -246,14 +250,13 @@
 									c.push(b[i]);
 								}
 							}
-							console.log("");console.log("");
-							console.log(c);
-							console.log("");console.log("");
+
 							return c;
 						};
+
 						var tmp_address = tmp_address_array(obj.property_param_address);
 
-						Property.findOne({$and: [{
+						Property.findOne({$or: [{
 							"subNumber": {$in: tmp_address}}, {
 							"streetNumber": {$in: tmp_address}}], $or: [{
 							"streetName": {$in: tmp_address}}, {
@@ -297,6 +300,34 @@
 					}
 				}
 				sendTextMessage(sender, responseText);
+			break;
+			case "weather-action-get":
+				if (parameters.hasOwnProperty("weather_param_city") && parameters["weather_param_city"] !== "") {
+					request({
+						"url": "http://api.openweathermap.org/data/2.5/weather",
+						"qs": {
+							"appid": config.OPEN_WEATHER_API_KEY,
+							"q": parameters["weather_param_city"]
+						}
+					}, function(err, res, body) {
+						if (err) {
+							console.log(err);
+						}
+						else {
+							let weather = JSON.parse(body);
+							if (weather.hasOwnProperty("weather")) {
+								let reply = `${responseText} ${weather["weather"][0]["description"]}`;
+								sendTextMessage(sender, reply);
+							}
+							else {
+								sendTextMessage(sender, `No weather forecast available for ${parameters["geo-city"]}`);
+							}
+						}
+					});
+				}
+				else {
+					sendTextMessage(sender, responseText);
+				}
 			break;
 			default:
 				// Unhandled action, just send back the text
