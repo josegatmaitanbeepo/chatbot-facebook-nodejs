@@ -10,7 +10,6 @@
 	const request = require('request');
 	const app = express();
 	const uuid = require('uuid');
-	const request = require("request");
 
 // Messenger API parameters
 
